@@ -4,8 +4,12 @@
 #include "stdafx.h"
 #include<Python.h>
 
-int _tmain(int argc, _TCHAR* argv[])
-{	
+
+
+
+
+void byPythonFile()
+{
 	//Py_Initialize(); /*初始化python解释器,告诉编译器要用的python编译器*/
 	//PyRun_SimpleString("import sys"); /*调用python文件*/
 	//PyRun_SimpleString("sys.path.append('./')");
@@ -46,8 +50,52 @@ int _tmain(int argc, _TCHAR* argv[])
 	Py_Finalize();//调用Py_Finalize，这个根Py_Initialize相对应的。
 
     system("pause");
+}
+
+void plot()
+{
+	Py_SetPythonHome(L"D:\\ProgramData\\Miniconda3_32");
+	Py_Initialize();//使用python之前，要调用Py_Initialize();这个函数进行初始化
+	PyRun_SimpleString("import sys"); /*调用python文件*/
+	PyRun_SimpleString("sys.path.append('./')");
+	PyRun_SimpleString("import os"); /*调用python文件*/
+	PyRun_SimpleString("sys.argv.append('D:/code/chezhe/chezhe.py')"); /*调用python文件*/
+	PyRun_SimpleString("print(sys.argv)"); /*调用python文件*/	
+	PyRun_SimpleString("sys.argv.append('D:/code/chezhe/chezhe.py')"); /*调用python文件*/
+	PyRun_SimpleString("baseName = os.path.basename(sys.argv[0])"); /*调用python文件*/
+	PyRun_SimpleString("print(sys.argv)"); /*调用python文件*/	
+	PyRun_SimpleString("import matplotlib.pyplot as plt"); /*调用python文件*/
+	PyRun_SimpleString("plt.plot([1,2,3,4], [12,3,23,231])"); /*调用python文件*/
+	PyRun_SimpleString("plt.show()"); /*调用python文件*/
+	Py_Finalize();//调用Py_Finalize，这个根Py_Initialize相对应的。
+
+	system("pause");
+
+}
+
+void filePlot()
+{
+	Py_SetPythonHome(L"D:\\ProgramData\\Miniconda3_32");
+	Py_Initialize();//使用python之前，要调用Py_Initialize();这个函数进行初始化
+	PyRun_SimpleString("import sys"); /*调用python文件*/
+	PyRun_SimpleString("sys.path.append('./')");
+	PyRun_SimpleString("sys.argv.append('D:/code/chezhe/chezhe.py')"); //这个可以随便写实际上
+	PyObject * pModule = NULL;//声明变量
+	PyObject * pFunc = NULL;// 声明变量
+	pModule = PyImport_ImportModule("chezhe");//这里是要调用的文件名
+	pFunc= PyObject_GetAttrString(pModule, "paint");//这里是要调用的函数名
+	PyEval_CallObject(pFunc, NULL);//
+	Py_Finalize();//调用Py_Finalize，这个根Py_Initialize相对应的。
+	system("pause");
+}
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{	
+	filePlot();
 	return 0;
 }
+
 
 
 
